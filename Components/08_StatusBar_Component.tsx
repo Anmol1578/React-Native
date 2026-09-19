@@ -8,6 +8,8 @@ export default function App() {
         backgroundColor: "plum",
         padding: 60,
       }}
-    ></View>
+    >
+      <StatusBar backgroundColor="blue" barStyle="dark-content" hidden={true} />
+    </View>
   );
 }
