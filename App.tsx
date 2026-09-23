@@ -1,28 +1,18 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import Box from "./RNLayout/components/box";
 
 export default function App() {
   return (
+
+    // <View style={{ backgroundColor:"plum" , flex: 1}}></View>
     <View style={styles.container}>
-      <View style={[styles.darkMode]}>
-        <Text style={styles.darkModeText}>
-          Style inheritance is a concept in React Native
-        </Text>
-      </View>
-      <View style={[styles.box, styles.lightBlueBg, styles.boxShadow]}>
-        <Text>LightBlue Box</Text>
-      </View>
-
-      <View style={[styles.box, styles.lightgreenBg, styles.androidShadow]}>
-        <Text style={{ borderRadius: 10, backgroundColor: "red" }}>
-          Lightgreen Box
-        </Text>
-      </View>
-
-      <View style={[styles.box, styles.lightyellowBg]}>
-        <Text style={{ borderRadius: 10, backgroundColor: "red" }}>
-          Lightyellow Box
-        </Text>
-      </View>
+      <Box style={{ backgroundColor: "#8e9b00" }}>Box 1</Box>
+      <Box style={{ backgroundColor: "#1b57da"  }}>Box 2</Box>
+      <Box style={{ backgroundColor: "#d68215" }}>Box 3</Box>
+      {/* <Box style={{ backgroundColor: "#00c2f3" }}>Box 4</Box>
+      <Box style={{ backgroundColor: "#ee1f98" }}>Box 5</Box>
+      <Box style={{ backgroundColor: "#200110" }}>Box 6</Box>
+      <Box style={{ backgroundColor: "#454739" }}>Box 7</Box> */}
     </View>
   );
 }
@@ -30,47 +20,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "plum",
-    padding: 60,
-  },
-
-  darkMode: {
-    backgroundColor: "black",
-  },
-
-  darkModeText: {
-    color: "white",
-  },
-
-  box: {
-    width: 300,
-    height: 200,
-    paddingHorizontal: 40,
-    paddingVertical: 20,
-    marginVertical: 20,
-    borderWidth: 2,
-    borderColor: "Blue",
-  },
-
-  lightBlueBg: {
-    backgroundColor: "lightblue",
-  },
-
-  lightgreenBg: {
-    backgroundColor: "lightgreen",
-  },
-
-  lightyellowBg: {
-    backgroundColor: "lightyellow",
-  },
-
-  boxShadow: {
-    shadowColor: "#1822b8",
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 3,
-    shadowRadius: 2,
-  },
-  androidShadow: {
-    elevation: 30,
+    marginTop: 50,
+    borderWidth: 6,
+    borderColor: "red",
   },
 });

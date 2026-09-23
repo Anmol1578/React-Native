@@ -1,3 +1,5 @@
+// Flex and Flex direction , Justify Content and ALign Items 
+
 import { View, StyleSheet } from "react-native";
 import Box from "./RNLayout/components/box";
 
@@ -20,6 +22,19 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // flexDirection:"row-reverse",
+    // justifyContent:"flex-start",
+    // justifyContent:"flex-end",    // Jusitfy content
+    // justifyContent:"center",
+    // justifyContent:"space-between",
+    // justifyContent:"space-around",
+    // justifyContent:"space-evenly",
+
+    // alignItems:"stretch",               // Align Items
+    // alignItems:"flex-start",
+    // alignItems:"flex-end",
+    // alignItems:"center",
+    // alignItems:"baseline",
     marginTop: 50,
     borderWidth: 6,
     borderColor: "red",
