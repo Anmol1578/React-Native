@@ -1,30 +1,59 @@
-import { View, StyleSheet } from "react-native";
-import Box from "./RNLayout/components/box";
+import { useState, useEffect } from "react";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 
 export default function App() {
+  const [dimensions, setDimensions] = useState({
+    window: Dimensions.get("window"),
+  });
+
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
+      setDimensions({ window });
+    });
+    return () => subscription?.remove();
+  });
+
+  const { window } = dimensions;
+  const windowWidth = window.width;
+  const windowHeight = window.height;
+
   return (
-    // <View style={{ backgroundColor:"plum" , flex: 1}}></View>
     <View style={styles.container}>
-      <Box style={{ backgroundColor: "#8e9b00" }}>Box 1</Box>
-      <Box style={{ backgroundColor: "#1b57da" }}>Box 2</Box>
-      <Box style={{ backgroundColor: "#d68215", flexBasis: 140, flex: 1 }}>
-        Box 3
-      </Box>
-      <Box style={{ backgroundColor: "#00c2f3", height: 140, flex: 1 }}>
-        Box 4
-      </Box>
-      <Box style={{ backgroundColor: "#ee1f98" }}>Box 5</Box>
-      <Box style={{ backgroundColor: "#200110" }}>Box 6</Box>
-      <Box style={{ backgroundColor: "#454739" }}>Box 7</Box>
+      <View
+        style={[
+          styles.box,
+          {
+            width: windowWidth > 500 ? "70%" : "90%",
+            height: windowHeight > 600 ? "60%" : "90%",
+          },
+        ]}
+      >
+        <Text style={{ fontSize: windowWidth > 500 ? 50 : 24 }}>Welcome!</Text>
+      </View>
     </View>
   );
 }
 
+// const windowWidth = Dimensions.get("window").width;
+// const windowHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50,
-    borderWidth: 6,
-    borderColor: "red",
+    backgroundColor: "plum",
+    alignItems: "center",
+    justifyContent: "center",
   },
+
+  box: {
+    // width: windowWidth > 500 ? "70%" : "90%",
+    // height: windowHeight > 600 ? "60%" : "90%",
+    backgroundColor: "lightblue",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  // text: {
+  //   fontSize: windowWidth > 500 ? 50 : 24,
+  // },
 });
