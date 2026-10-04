@@ -2,73 +2,129 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   TextInput,
-  Switch,
+  Button,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-
-
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
+type Errors = {
+  username?: string;
+  password?: string;
+};
+
 export default function App() {
-  const [name, setName] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
+
+  const validateForm = () => {
+    let errors: Errors = {};
+
+    if (!username) errors.username = "Username is required";
+    if (!password) errors.password = "Password is required";
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      console.log("Submitted", username, password);
+
+      setUsername("");
+      setPassword("");
+      setErrors({});
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your text here..."
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={[styles.input, styles.multilineText]}
-        placeholder="Message"
-        multiline
-      />
-      <Text style={styles.text}>My name is {name}</Text>
-      <View style={styles.switchContainer}>
-        <Text style={styles.text}>Dark Mode</Text>
-        <Switch
-          value={isDarkMode}
-          onValueChange={() => setIsDarkMode((previousState) => !previousState)}
-          trackColor={{ false: "#767577", true: "lightblue" }}
-          thumbColor= "#f4f3f4"
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+      style={styles.container}
+    >
+      <View style={styles.form}>
+        <Image source={require("./assets/icon.png")} style={styles.image} />
+        <Text style={styles.label}>Username</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Enter username"
+          value={username}
+          onChangeText={setUsername}
         />
+
+        {errors.username ? (
+          <Text style={styles.errorText}>{errors.username}</Text>
+        ) : null}
+
+        <Text style={styles.label}>Password</Text>
+
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          placeholder="Enter password"
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        {errors.password ? (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        ) : null}
+
+        <Button title="Login" onPress={handleSubmit} />
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f3f3f3",
-    paddingTop: StatusBar.currentHeight,
+    backgroundColor: "#eedada",
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
 
+  form: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    fontWeight: "bold",
+  },
   input: {
-    height: 50,
-    margin: 12,
-    padding: 10,
+    height: 40,
     borderColor: "gray",
     borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
   },
-  text: {
-    fontSize: 32,
-    padding: 2,
-    margin: 20,
+  image: {
+    width: 200,
+    height: 200,
+    alignSelf: "center",
+    marginBottom: 50,
   },
-  multilineText: {
-    minHeight: 100,
-    textAlignVertical: "top",
-  },
-
-  switchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
