@@ -1,47 +1,32 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen";
-import AboutScreen from "./screens/AboutScreen";
-import { Pressable, Text } from "react-native";
-const Stack = createNativeStackNavigator();
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import DashboardScreen from "./screens/Dashboard";
+import SettingScreen from "./screens/SettingScreen";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#5082e0",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: { fontWeight: "bold" },
-          headerRight: () => (
-            <Pressable onPress={() => alert("Menu Button Pressed")}>
-              <Text style={{ color: "white", fontSize: 16 }}>Menu</Text>
-            </Pressable>
-          ),
-
-          contentStyle: {
-            backgroundColor: "#eed5da",
-          },
-        }}
-      >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+      <Drawer.Navigator>
+        <Drawer.Screen
+          name="Dashboard"
+          component={DashboardScreen}
           options={{
-            title: "Welcome Home",
+            title: "My Dashboard",
+            drawerLabel: "Dashboard",
+            drawerActiveTintColor: "#251b1b",
+            drawerActiveBackgroundColor: "lightblue",
+            drawerContentStyle: {
+              backgroundColor: "#6c6f8f",
+            },
           }}
         />
-        <Stack.Screen
-          name="About"
-          component={AboutScreen}
-          initialParams={{
-            data: "Guest",
-          }}
-        />
-      </Stack.Navigator>
+
+        <Drawer.Screen name="Settings" component={SettingScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
